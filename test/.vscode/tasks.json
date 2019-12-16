@@ -1,0 +1,51 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "configure",
+            "type": "shell",
+            "command": "cmake -H. -B'_build' -G'Unix Makefiles'",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "cmake --build . --target test --clean-first",
+            "options": {
+                "cwd": "${workspaceFolder}/_build"
+            },
+            "dependsOn": ["configure"]
+        },
+        {
+            "label": "erase chip",
+            "type": "shell",
+            "command": "nrfjprog --eraseall -f nrf52"
+        },
+        {
+            "label": "flash softdevice",
+            "type": "shell",
+            "command": "nrfjprog --program ${workspaceFolder}/../nRF5SDK160098a08e2/components/softdevice/s132/hex/s132_nrf52_7.0.1_softdevice.hex --chiperase -f nrf52"
+        },
+        {
+            "label": "flash firmware",
+            "type": "shell",
+            "command": "nrfjprog --program test.hex -f nrf52 --reset",
+            "options": {
+                "cwd": "${workspaceFolder}/_build/src"
+            }
+        },
+        {
+            "label": "flash firmware & softdevice",
+            "type": "shell",
+            "command": "nrfjprog --program test.hex -f nrf52 --reset",
+            "options": {
+                "cwd": "${workspaceFolder}/_build/src"
+            },
+            "dependsOn": ["flash softdevice"]
+        }
+    ]
+}

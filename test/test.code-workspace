@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "/home/egor/work/vscode_nRF1/nRF5SDK160098a08e2"
+		},
+		{
+			"path": "/home/egor/work/vscode_nRF1/tools"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"nrf_gpio.h": "c"
+		}
+	}
+}
